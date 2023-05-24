@@ -20,7 +20,11 @@ public class HomeController : Controller
     {
         var model = new IndexViewModel
         {
-            Site = db.Sites!.OrderBy(x => x.Id).First(),
+            Site = db.Sites!.OrderBy(x => x.Id).FirstOrDefault(),
+            Slides = db.Slides!.OrderBy(x => x.Order).Where(x => x.IsView == true).ToList(),
+            About = db.Abouts!.FirstOrDefault(),
+            Teams = db.Teams!.OrderBy(x => x.Order).Where(x => x.Isview == true).ToList(),
+            Portfolios = db.Portfolios!.OrderBy(x => x.Order).Where(x => x.Isview == true).ToList(),
         };
         return View(model);
     }
@@ -30,6 +34,8 @@ public class HomeController : Controller
         var model = new IndexViewModel
         {
             Site = db.Sites!.OrderBy(x => x.Id).First(),
+            Abouts = db.Abouts!.OrderBy(x => x.Order).Where(x => x.Isview == true).ToList(),
+            Teams = db.Teams!.OrderBy(x => x.Order).Where(x => x.Isview == true).ToList(),
         };
         return View(model);
     }
@@ -110,6 +116,17 @@ public class HomeController : Controller
         };
         return View(model);
     }
+    [Route("/portfolio-detail/{title}/{id}")]
+    public IActionResult PortfolioDetail(String title, int id)
+    {
+        var model = new IndexViewModel()
+        {
+            Site = db.Sites!.OrderBy(x => x.Id).First(),
+            Portfolios = db.Portfolios!.Where(x => x.Id == id).ToList(),
+        };
+        return View(model);
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

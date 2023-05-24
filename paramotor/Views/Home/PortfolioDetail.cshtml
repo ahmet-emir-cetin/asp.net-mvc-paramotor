@@ -1,0 +1,51 @@
+@model paramotor.Models.IndexViewModel
+@{
+    String title = Model.Portfolios!.First().Title!;
+    ViewData["Title"] = "PROJECT DETAILS";
+    ViewData["Subtitle"] = title;
+}
+@{await Html.RenderPartialAsync("_Banner");}
+
+<!--================Portfolio Details Area =================-->
+@if (Model.Portfolios!.Count() > 0)
+{
+        <section class="portfolio_details_area p_120">
+        	<div class="container">
+        		<div class="portfolio_details_inner">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="left_img">
+								<img class="img-fluid" src="~/uploads/images/@Model.Portfolios!.First().Image" alt="">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="portfolio_right_text">
+								<h4>@Model.Portfolios!.First().Title</h4>
+								<p>@Model.Portfolios!.First().Subtitle</p>
+								<ul class="list">
+									<li>
+                                        <span>Rating</span>: 
+                                        @for (int i = 0; i < @Model.Portfolios!.First().Rating; i++)
+                                        {
+                                            <i class="fa fa-star"></i>
+                                        }
+                                    </li>
+									<li><span>Client</span>:  @Model.Portfolios!.First().Client</li>
+									<li><span>Website</span>:  @Model.Portfolios!.First().Website</li>
+									<li><span>Completed</span>:  @Model.Portfolios!.First().Complated</li>
+								</ul>
+								<ul class="list social_details">
+									<li><a href="@Model.Portfolios!.First().Facebook"><i class="fa fa-facebook"></i></a></li>
+									<li><a href="@Model.Portfolios!.First().Twitter"><i class="fa fa-twitter"></i></a></li>
+									<li><a href="@Model.Portfolios!.First().Instagram"><i class="fa fa-instagram"></i></a></li>
+									<li><a href="@Model.Portfolios!.First().Linkedin"><i class="fa fa-linkedin"></i></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+       				<p>@Model.Portfolios!.First().Detail</p>
+        		</div>
+        	</div>
+        </section>
+}
+<!--================End Portfolio Details Area =================-->
